@@ -1,0 +1,274 @@
+/* ===========================================================================
+   Bellum Security — sign-in portal
+   Original styling. Layout inspired by common enterprise SSO flows
+   (centered card over a wallpaper, two-step identifier → password).
+   =========================================================================== */
+
+:root {
+  --brand:        #0b6bcb;   /* primary accent — change to your brand color */
+  --brand-hover:  #095aad;
+  --brand-ring:   #0b6bcb55;
+  --ink:          #1b1b1f;
+  --ink-soft:     #605e5c;
+  --line:         #d9d9d9;
+  --line-strong:  #1b1b1f;
+  --error:        #c00f0c;
+  --card-bg:      #ffffff;
+  --field-bg:     #ffffff;
+  --radius:       2px;
+  --card-w:       440px;
+  --shadow:       0 2px 6px rgba(0, 0, 0, .18), 0 0 2px rgba(0, 0, 0, .08);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* --- Background wallpaper -------------------------------------------------
+   Drop your image at assets/background.jpg and it takes over automatically.
+   Until then, this gradient is a clean, brand-neutral fallback. */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: #0a1826;
+  /* Layer order = top → bottom:
+       1. dark overlay (keeps card/footer readable over any photo)
+       2. your wallpaper — add assets/background.jpg and it appears here
+       3-5. gradient fallback that shows through when no photo is present */
+  background-image:
+    linear-gradient(135deg, rgba(6, 20, 40, .55), rgba(6, 20, 40, .25)),
+    url("assets/background.jpg"),
+    radial-gradient(1200px 600px at 20% 10%, #16385f 0%, transparent 60%),
+    radial-gradient(1000px 700px at 90% 90%, #0a2038 0%, transparent 55%),
+    linear-gradient(160deg, #0d2036 0%, #0a1826 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* --- Portal / card -------------------------------------------------------- */
+.portal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  gap: 0;
+}
+
+.card {
+  width: 100%;
+  max-width: var(--card-w);
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  padding: 44px;
+  animation: card-in .25s ease-out;
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Brand ---------------------------------------------------------------- */
+.brand {
+  margin-bottom: 16px;
+}
+
+.brand__logo {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
+/* --- Steps ---------------------------------------------------------------- */
+.step[hidden] { display: none; }
+
+.heading {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 12px 0 16px;
+  color: var(--ink);
+}
+
+/* --- Fields --------------------------------------------------------------- */
+.field {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--line-strong);
+  padding: 6px 0 8px;
+  font-size: 15px;
+  color: var(--ink);
+  background: transparent;
+  outline: none;
+  transition: border-color .15s ease;
+}
+
+.field::placeholder { color: #6e6e6e; }
+
+.field:focus {
+  border-bottom: 2px solid var(--brand);
+  padding-bottom: 7px; /* keep baseline steady when border thickens */
+}
+
+.field[aria-invalid="true"] {
+  border-bottom-color: var(--error);
+}
+
+/* --- Errors --------------------------------------------------------------- */
+.error {
+  color: var(--error);
+  font-size: 13px;
+  margin: 6px 0 0;
+}
+.error[hidden] { display: none; }
+
+/* --- Links ---------------------------------------------------------------- */
+.link-row { margin: 14px 0 0; }
+
+.link {
+  color: var(--brand);
+  font-size: 13px;
+  text-decoration: none;
+}
+.link:hover { text-decoration: underline; color: var(--brand-hover); }
+
+/* --- Account pill (shown on password step) -------------------------------- */
+.account-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 4px;
+  font-size: 15px;
+  color: var(--ink);
+  cursor: pointer;
+}
+.account-pill__arrow { color: var(--ink-soft); font-size: 16px; }
+.account-pill:hover .account-pill__name { text-decoration: underline; }
+
+/* --- Actions / buttons ---------------------------------------------------- */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.btn {
+  min-width: 108px;
+  height: 40px;
+  padding: 0 16px;
+  font-size: 15px;
+  font-family: inherit;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  background: var(--brand);
+  color: #fff;
+}
+.btn--primary:hover { background: var(--brand-hover); }
+.btn--primary:disabled {
+  background: #c7c7c7;
+  cursor: not-allowed;
+}
+
+.btn--ghost {
+  background: #fff;
+  border-color: var(--line);
+  color: var(--ink);
+}
+.btn--ghost:hover { background: #f3f3f3; }
+.btn[hidden] { display: none; }
+
+/* --- Remember me ---------------------------------------------------------- */
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--ink);
+}
+.remember[hidden] { display: none; }
+.remember input { width: 16px; height: 16px; accent-color: var(--brand); }
+
+/* --- Sign-in options ------------------------------------------------------ */
+.options {
+  width: 100%;
+  max-width: var(--card-w);
+  margin-top: 16px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+  border: none;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: inherit;
+}
+.options:hover { background: #f7f7f7; }
+.options__icon { color: var(--ink); display: inline-flex; }
+
+/* --- Footer --------------------------------------------------------------- */
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 22px;
+  background: rgba(0, 0, 0, .55);
+  color: #e6e6e6;
+  font-size: 12px;
+}
+.footer__link { color: #e6e6e6; text-decoration: none; }
+.footer__link:hover { text-decoration: underline; }
+.footer__spacer { flex: 1; }
+.footer__copy { color: #cfcfcf; }
+
+/* --- Accessibility helper ------------------------------------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Responsive ----------------------------------------------------------- */
+@media (max-width: 480px) {
+  .card { padding: 28px 22px; box-shadow: none; }
+  .options { box-shadow: none; }
+  :root { --card-w: 100%; }
+  .portal { padding: 0; justify-content: flex-start; }
+  .card { min-height: auto; margin-top: 8vh; }
+}

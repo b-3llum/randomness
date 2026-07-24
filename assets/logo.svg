@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 44" role="img" aria-label="Bellum Security">
+  <!-- Placeholder mark — replace this whole file with your own logo.svg -->
+  <defs>
+    <linearGradient id="shield" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e88e5"/>
+      <stop offset="1" stop-color="#0b6bcb"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Shield icon -->
+  <g transform="translate(2,4)">
+    <path d="M18 0 L34 5 V17 C34 27 27 34 18 37 C9 34 2 27 2 17 V5 Z"
+          fill="url(#shield)"/>
+    <path d="M18 8 L18 29 M11 18 L25 18"
+          stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    <path d="M18 0 L34 5 V17 C34 27 27 34 18 37 C9 34 2 27 2 17 V5 Z"
+          fill="none" stroke="#ffffff" stroke-opacity=".25" stroke-width="1"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="46" y="22" font-family="Segoe UI, Arial, sans-serif"
+        font-size="19" font-weight="700" letter-spacing="0.5" fill="#1b1b1f">BELLUM</text>
+  <text x="46" y="36" font-family="Segoe UI, Arial, sans-serif"
+        font-size="10.5" font-weight="500" letter-spacing="3.4" fill="#605e5c">SECURITY</text>
+</svg>
